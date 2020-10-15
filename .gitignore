@@ -1,3 +1,5 @@
 venv/
 tmp/
 .idea/
+__pycache__/
+token
