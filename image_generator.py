@@ -1,8 +1,8 @@
 from PIL import ImageFont, ImageDraw, Image
 import time
+import os
 
 font_name = "Aller_Bd.ttf"
-
 
 async def generate_osu_image(text, req_id):
     text = text.upper()
@@ -35,5 +35,9 @@ async def generate_osu_image(text, req_id):
     draw.text(((img_width - text_width) / 2, (img_height - text_height) / 2), text, font=font)
 
     image_path = 'tmp/{}-{}.png'.format(req_id, time.time())
+
+    if not os.path.exists('tmp'):
+        os.makedirs('tmp')
+
     image.save(image_path)
     return image_path
