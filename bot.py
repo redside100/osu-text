@@ -9,6 +9,8 @@ prefix = '~osu '
 class MyClient(discord.Client):
     async def on_ready(self):
         print('Logged on as', self.user)
+        guild_count = len(self.guilds)
+        await self.change_presence(activity=discord.Game(name="on {} servers".format(guild_count)))
 
     async def on_message(self, message):
 
@@ -22,6 +24,10 @@ class MyClient(discord.Client):
             image_path = await image_generator.generate_osu_image(text, message.author.id)
             await message.channel.send(file=discord.File(image_path))
             os.remove(image_path)
+
+        # Update guild count
+        guild_count = len(self.guilds)
+        await self.change_presence(activity=discord.Game(name="on {} servers".format(guild_count)))
 
 
 def get_token_from_file():
